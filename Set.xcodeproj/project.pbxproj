@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DD1EBA0D245625B500E371A3 /* Programming Project 2_ Set.pdf in Resources */ = {isa = PBXBuildFile; fileRef = DD1EBA0C245625B500E371A3 /* Programming Project 2_ Set.pdf */; };
 		DD4DEE46245049FC009619BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4DEE45245049FC009619BA /* AppDelegate.swift */; };
 		DD4DEE48245049FC009619BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4DEE47245049FC009619BA /* SceneDelegate.swift */; };
 		DD4DEE4A245049FC009619BA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4DEE49245049FC009619BA /* ViewController.swift */; };
@@ -17,6 +18,8 @@
 		DD4DEE68245049FD009619BA /* SetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4DEE67245049FD009619BA /* SetUITests.swift */; };
 		DD4DEE7724505AC5009619BA /* SetCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4DEE7624505AC5009619BA /* SetCard.swift */; };
 		DD4DEE7924505DB0009619BA /* SetGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4DEE7824505DB0009619BA /* SetGame.swift */; };
+		DD7282DC24546F6900B37DFE /* Cheat.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7282DB24546F6900B37DFE /* Cheat.swift */; };
+		DD79D33A2455F6B500F5A188 /* ComputerMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD79D3392455F6B500F5A188 /* ComputerMode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DD1EBA0C245625B500E371A3 /* Programming Project 2_ Set.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "Programming Project 2_ Set.pdf"; path = "../../../../Downloads/Programming Project 2_ Set.pdf"; sourceTree = "<group>"; };
 		DD4DEE42245049FC009619BA /* Set.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Set.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD4DEE45245049FC009619BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD4DEE47245049FC009619BA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -53,6 +57,8 @@
 		DD4DEE69245049FD009619BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD4DEE7624505AC5009619BA /* SetCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCard.swift; sourceTree = "<group>"; };
 		DD4DEE7824505DB0009619BA /* SetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGame.swift; sourceTree = "<group>"; };
+		DD7282DB24546F6900B37DFE /* Cheat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cheat.swift; sourceTree = "<group>"; };
+		DD79D3392455F6B500F5A188 /* ComputerMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComputerMode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +112,8 @@
 				DD4DEE7624505AC5009619BA /* SetCard.swift */,
 				DD4DEE7824505DB0009619BA /* SetGame.swift */,
 				DD4DEE49245049FC009619BA /* ViewController.swift */,
+				DD79D3392455F6B500F5A188 /* ComputerMode.swift */,
+				DD7282DB24546F6900B37DFE /* Cheat.swift */,
 				DD4DEE4B245049FC009619BA /* Main.storyboard */,
 				DD4DEE7524504A12009619BA /* other files */,
 				DD4DEE53245049FD009619BA /* Info.plist */,
@@ -134,6 +142,7 @@
 		DD4DEE7524504A12009619BA /* other files */ = {
 			isa = PBXGroup;
 			children = (
+				DD1EBA0C245625B500E371A3 /* Programming Project 2_ Set.pdf */,
 				DD4DEE45245049FC009619BA /* AppDelegate.swift */,
 				DD4DEE47245049FC009619BA /* SceneDelegate.swift */,
 				DD4DEE4E245049FD009619BA /* Assets.xcassets */,
@@ -247,6 +256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD4DEE52245049FD009619BA /* LaunchScreen.storyboard in Resources */,
+				DD1EBA0D245625B500E371A3 /* Programming Project 2_ Set.pdf in Resources */,
 				DD4DEE4F245049FD009619BA /* Assets.xcassets in Resources */,
 				DD4DEE4D245049FC009619BA /* Main.storyboard in Resources */,
 			);
@@ -273,11 +283,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD79D33A2455F6B500F5A188 /* ComputerMode.swift in Sources */,
 				DD4DEE4A245049FC009619BA /* ViewController.swift in Sources */,
 				DD4DEE46245049FC009619BA /* AppDelegate.swift in Sources */,
 				DD4DEE7924505DB0009619BA /* SetGame.swift in Sources */,
 				DD4DEE7724505AC5009619BA /* SetCard.swift in Sources */,
 				DD4DEE48245049FC009619BA /* SceneDelegate.swift in Sources */,
+				DD7282DC24546F6900B37DFE /* Cheat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

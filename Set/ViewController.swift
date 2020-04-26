@@ -13,11 +13,14 @@ class ViewController: UIViewController {
     private var game = SetGame()
     private var buttonsCards = [UIButton:SetCard]()
     private var selectedButtonCards = [UIButton:SetCard]()
+    /// Used to save currently selected buttons when cheat used
+    private var selectedButtonCardsCheat = [UIButton:SetCard]()
     private var matchedButtonCards = [UIButton:SetCard]()
     private var freeButtonsIndices = [Int]()
-    
     // 30 seconds good; > bad
     private var timeRange = Date()
+    // Computer mode
+    private var computerMode: ComputerMode?
     
     private var score = 0 {
         didSet {
@@ -27,27 +30,63 @@ class ViewController: UIViewController {
     
     private var isMatched: Bool {
         get {
-            game.match(set: Array(selectedButtonCards.values))
-        }
-    }
-    
-    private var freeButtonIndex: Int? {
-        get {
-            if let buttonIndex = freeButtonsIndices.randomElement() {
-                freeButtonsIndices.remove(buttonIndex)
-                return buttonIndex
-            }
-            return nil
+            SetGame.match(set: Array(selectedButtonCards.values))
         }
     }
     
     @IBOutlet var buttons: [UIButton]!
-    @IBOutlet weak var dealMoreButton: UIButton!
+    @IBOutlet weak var dealButton: UIButton!
+    @IBOutlet weak var computerModeButton: UIButton!
     @IBOutlet weak var scoreLabel: UILabel!
     
-    @IBAction func dealMoreCardsButton(_ sender: UIButton) {
-        matchedButtonCards.forEach({ deselect(button: $0.key) })
-        dealMoreCards()
+    @IBAction func activateComputerMode(_ sender: UIButton) {
+        computerMode = ComputerMode { t in
+            if self.cheat() {
+                self.computerModeButton.setTitle("😂", for: .disabled)
+            } else {
+                self.computerModeButton.setTitle("😢", for: .disabled)
+            }
+            
+        }
+        computerMode?.setAnticipation { t in self.computerModeButton.setTitle("😁", for: .disabled) }
+        computerMode?.setThink { self.computerModeButton.setTitle("🤔", for: .disabled) }
+        computerModeButton.isEnabled = false
+    }
+    
+    @IBAction func dealSetUI(_ sender: UIButton) {
+        /// Penalty for not matched matches on screen
+        if selectedButtonCards.count != 3 {
+            if let matches = Cheat.detectSet(in: buttonsCards) {
+                score -= matches.count * 1
+            }
+        }
+        selectedIsMatchedDoDeal()
+    }
+    
+    @IBAction func cheatSet(_ sender: UIButton) {
+        if isMatched {
+            selectedIsMatchedDoDeal()
+        } else {
+            cheat()
+        }
+    }
+    @discardableResult
+    private func cheat() -> Bool {
+        if let matches = Cheat.detectSet(in: buttonsCards) {
+            if selectedButtonCards.count == 3 {
+                selectedButtonCards.forEach({ deselect(button: $0.key) })
+            } else if selectedButtonCardsCheat.count == 0 {
+                selectedButtonCardsCheat = selectedButtonCards
+            }
+            selectedButtonCards.removeAll()
+            let buttons = Array(matches.keys)
+            for i in 0..<3 {
+                selectedButtonCards[buttons[i]] = buttonsCards[buttons[i]]
+            }
+            selectedButtonCards.forEach({ select(button: $0.key, with: #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)) })
+            return true
+        }
+        return false
     }
     
     @IBAction func startNewGame(_ sender: UIButton) {
@@ -55,25 +94,39 @@ class ViewController: UIViewController {
         score = 0
         buttons.forEach({ deselect(button: $0) })
         buttons.forEach({ $0.setTitle(nil, for: .normal); $0.setAttributedTitle(nil, for: .normal) })
+        computerModeButton.setTitle("VS", for: .normal)
         selectedButtonCards.removeAll()
+        selectedButtonCardsCheat.removeAll()
         matchedButtonCards.removeAll()
         freeButtonsIndices.removeAll()
+        buttonsCards.removeAll()
+        dealButton.isEnabled = true
+        computerModeButton.isEnabled = true
         start()
     }
     
     @IBAction func touchCard(_ sender: UIButton) {
+        if buttonsCards[sender] == nil {
+            return
+        }
+        
         if selectedButtonCards.count == 3 {
             if isMatched {
                 /// Don't select matched cards until they're replaced.
-                if matchedButtonCards[sender] != nil { return }
-                matchedButtonCards.forEach({ deselect(button: $0.key) })
-                selectedButtonCards.removeAll()
-                dealMoreCards()
+                if selectedButtonCards[sender] != nil { return }
+                selectedIsMatchedDoDeal()
             } else {
                 selectedButtonCards.forEach({ deselect(button: $0.key) })
                 selectedButtonCards.removeAll()
             }
         }
+        
+        if selectedButtonCardsCheat.count != 0 {
+            fixCheat()
+            selectedButtonCards = selectedButtonCardsCheat
+            selectedButtonCardsCheat.removeAll()
+        }
+        
         if selectedButtonCards[sender] != nil {
             score -= 1
             selectedButtonCards.removeValue(forKey: sender)
@@ -84,8 +137,6 @@ class ViewController: UIViewController {
         }
         if selectedButtonCards.count == 3 {
             if isMatched {
-                selectedButtonCards.forEach({ select(button: $0.key, with: #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)) })
-                selectedButtonCards.forEach({ matchedButtonCards[$0.key] = $0.value })
                 if Date().timeIntervalSince(timeRange) < 30.0 {
                     if freeButtonsIndices.count <= 6 {
                         score += 3
@@ -99,7 +150,8 @@ class ViewController: UIViewController {
                         score += 3
                     }
                 }
-                dealMoreButton.isEnabled = true
+                dealButton.isEnabled = true
+                selectedButtonCards.forEach({ select(button: $0.key, with: #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)) })
             } else {
                 if Date().timeIntervalSince(timeRange) < 30.0 {
                     if freeButtonsIndices.count <= 6 {
@@ -121,8 +173,9 @@ class ViewController: UIViewController {
     
     private func start() {
         freeButtonsIndices.append(contentsOf: buttons.indices)
+        buttons.forEach({ $0.backgroundColor = UIColor.white} )
         for _ in 0..<4 {
-            if let card = game.getSetFromDeck() {
+            if let card = game.getSet() {
                 for i in 0..<3 {
                     let buttonIndex = freeButtonsIndices.randomElement()!
                     let arrayIndex = freeButtonsIndices.firstIndex(of: buttonIndex)!
@@ -141,14 +194,20 @@ class ViewController: UIViewController {
     }
     
     private func updateScoreLabel() {
-        print(Date().timeIntervalSince(timeRange))
         scoreLabel.text = "Score: \(score)"
         timeRange = Date()
     }
     
-    private func dealMoreCards() {
+    private func selectedIsMatchedDoDeal() {
+        selectedButtonCards.forEach({ deselect(button: $0.key) })
+        matchedButtonCards = selectedButtonCards
+        selectedButtonCards.removeAll()
+        dealSet()
+    }
+    
+    private func dealSet() {
         if matchedButtonCards.count != 0 { game.updateMatched(set: Array(matchedButtonCards.values)) }
-        if let set = game.getSetFromDeck() {
+        if let set = game.getSet() {
             for card in set {
                 if matchedButtonCards.count > 0 {
                     let rButtonCard = matchedButtonCards.randomElement()!
@@ -161,22 +220,35 @@ class ViewController: UIViewController {
                 }
             }
             if game.deck.count == 0 || freeButtonsIndices.count == 0 {
-                dealMoreButton.isEnabled = false
+                dealButton.isEnabled = false
             }
         } else {
-            dealMoreButton.isEnabled = false
+            dealButton.isEnabled = false
             for buttonCard in matchedButtonCards {
+                buttonsCards.removeValue(forKey: buttonCard.key)
                 hide(button: buttonCard.key)
             }
         }
         matchedButtonCards.removeAll()
+        /// Computer mode starts
+        if computerMode != nil { computerMode?.think() }
     }
     
+    private func fixCheat() {
+        selectedButtonCardsCheat.forEach({
+            if buttonsCards[$0.key] != $0.value {
+            selectedButtonCardsCheat.removeValue(forKey: $0.key)
+            }
+        })
+    }
     
     private func hide(button: UIButton) {
         button.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
         button.setAttributedTitle(nil, for: .normal)
         button.setTitle(nil, for: .normal)
+        button.layer.borderWidth = 0.0
+        button.layer.cornerRadius = 0.0
+        button.layer.borderColor = UIColor.white.cgColor
         button.isEnabled = false
     }
     

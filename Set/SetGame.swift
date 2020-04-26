@@ -27,17 +27,17 @@ struct SetGame
         deck.shuffle()
     }
     
-    public mutating func getSetFromDeck() -> [SetCard]? {
+    public mutating func getSet() -> [SetCard]? {
         if deck.count == 0 { return nil }
         
         return [deck.removeLast(), deck.removeLast(), deck.removeLast()]
     }
     
-    public mutating func match(set: [SetCard]) -> Bool {
+    public static func match(set: [SetCard]) -> Bool {
         if set.count < 3 { return false }
-
+        
         if !(((set[0].number == set[1].number) || (set[0].number == set[2].number)) ^ (set[1].number != set[2].number)) {
-                   return false
+            return false
         }
         if !(((set[0].color == set[1].color) || (set[0].color == set[2].color)) ^ (set[1].color != set[2].color)) {
            return false

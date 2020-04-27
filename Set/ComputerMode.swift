@@ -28,16 +28,18 @@ struct ComputerMode
         _anticipation = anticipation
     }
     
-    public mutating func think() {
-        assert(_anticipation != nil, "ComputerMode.think() -> 'Anticipation part does not set.'")
-        _think?()
-        
+    public mutating func stop() {
         if _anticipationTimer?.isValid ?? false {
             _anticipationTimer?.invalidate()
         }
         if _actionTimer?.isValid ?? false {
             _actionTimer?.invalidate()
         }
+    }
+    
+    public mutating func think() {
+        assert(_anticipation != nil, "ComputerMode.think() -> 'Anticipation part does not set.'")
+        _think?()
         
         _actionTimer = Timer.scheduledTimer(withTimeInterval: cooldown, repeats: false, block: _action)
         _anticipationTimer = Timer.scheduledTimer(withTimeInterval: cooldown - 4, repeats: false, block: _anticipation!)

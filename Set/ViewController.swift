@@ -102,6 +102,7 @@ class ViewController: UIViewController {
         buttonsCards.removeAll()
         dealButton.isEnabled = true
         computerModeButton.isEnabled = true
+        computerMode?.stop()
         start()
     }
     
@@ -190,6 +191,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.clipsToBounds = true
         start()
     }
     

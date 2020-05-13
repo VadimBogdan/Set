@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DD1528002469D2EB0084EA4B /* SetCardGameScoreSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1527FF2469D2EB0084EA4B /* SetCardGameScoreSystem.swift */; };
 		DD1EBA0D245625B500E371A3 /* Programming Project 2_ Set.pdf in Resources */ = {isa = PBXBuildFile; fileRef = DD1EBA0C245625B500E371A3 /* Programming Project 2_ Set.pdf */; };
+		DD4CA544246C45F1000E805D /* FigureDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4CA543246C45F1000E805D /* FigureDrawer.swift */; };
+		DD4CA54D246C9ABD000E805D /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4CA54C246C9ABD000E805D /* Grid.swift */; };
 		DD4DEE46245049FC009619BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4DEE45245049FC009619BA /* AppDelegate.swift */; };
 		DD4DEE48245049FC009619BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4DEE47245049FC009619BA /* SceneDelegate.swift */; };
 		DD4DEE4A245049FC009619BA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4DEE49245049FC009619BA /* ViewController.swift */; };
@@ -18,8 +21,12 @@
 		DD4DEE68245049FD009619BA /* SetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4DEE67245049FD009619BA /* SetUITests.swift */; };
 		DD4DEE7724505AC5009619BA /* SetCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4DEE7624505AC5009619BA /* SetCard.swift */; };
 		DD4DEE7924505DB0009619BA /* SetGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4DEE7824505DB0009619BA /* SetGame.swift */; };
-		DD7282DC24546F6900B37DFE /* Cheat.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7282DB24546F6900B37DFE /* Cheat.swift */; };
-		DD79D33A2455F6B500F5A188 /* ComputerMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD79D3392455F6B500F5A188 /* ComputerMode.swift */; };
+		DD4ED75B246831D500617DB5 /* SetCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4ED75A246831D500617DB5 /* SetCardView.swift */; };
+		DD580ECA24693D3F00FD9B36 /* DrawStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD580EC924693D3F00FD9B36 /* DrawStrategy.swift */; };
+		DD7282DC24546F6900B37DFE /* SetCardGameCheat.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7282DB24546F6900B37DFE /* SetCardGameCheat.swift */; };
+		DD79D33A2455F6B500F5A188 /* SetCardGameBotMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD79D3392455F6B500F5A188 /* SetCardGameBotMode.swift */; };
+		DDC017E0246590E300FAD5CA /* Programming Project 3_ Graphical Set.pdf in Resources */ = {isa = PBXBuildFile; fileRef = DDC017DF246590E300FAD5CA /* Programming Project 3_ Graphical Set.pdf */; };
+		DDC017E42465CEA800FAD5CA /* SetCardViewCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC017E32465CEA800FAD5CA /* SetCardViewCollection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +47,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DD1527FF2469D2EB0084EA4B /* SetCardGameScoreSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardGameScoreSystem.swift; sourceTree = "<group>"; };
 		DD1EBA0C245625B500E371A3 /* Programming Project 2_ Set.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "Programming Project 2_ Set.pdf"; path = "../../../../Downloads/Programming Project 2_ Set.pdf"; sourceTree = "<group>"; };
+		DD4CA543246C45F1000E805D /* FigureDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FigureDrawer.swift; sourceTree = "<group>"; };
+		DD4CA54C246C9ABD000E805D /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Grid.swift; path = ../../../../.Trash/Grid.swift; sourceTree = "<group>"; };
 		DD4DEE42245049FC009619BA /* Set.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Set.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD4DEE45245049FC009619BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD4DEE47245049FC009619BA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -57,8 +67,12 @@
 		DD4DEE69245049FD009619BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD4DEE7624505AC5009619BA /* SetCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCard.swift; sourceTree = "<group>"; };
 		DD4DEE7824505DB0009619BA /* SetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGame.swift; sourceTree = "<group>"; };
-		DD7282DB24546F6900B37DFE /* Cheat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cheat.swift; sourceTree = "<group>"; };
-		DD79D3392455F6B500F5A188 /* ComputerMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComputerMode.swift; sourceTree = "<group>"; };
+		DD4ED75A246831D500617DB5 /* SetCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardView.swift; sourceTree = "<group>"; };
+		DD580EC924693D3F00FD9B36 /* DrawStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawStrategy.swift; sourceTree = "<group>"; };
+		DD7282DB24546F6900B37DFE /* SetCardGameCheat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardGameCheat.swift; sourceTree = "<group>"; };
+		DD79D3392455F6B500F5A188 /* SetCardGameBotMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardGameBotMode.swift; sourceTree = "<group>"; };
+		DDC017DF246590E300FAD5CA /* Programming Project 3_ Graphical Set.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "Programming Project 3_ Graphical Set.pdf"; path = "../../../../Downloads/Programming Project 3_ Graphical Set.pdf"; sourceTree = "<group>"; };
+		DDC017E32465CEA800FAD5CA /* SetCardViewCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardViewCollection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +100,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DD4CA545246C89CE000E805D /* FigureDrawer */ = {
+			isa = PBXGroup;
+			children = (
+				DD4CA543246C45F1000E805D /* FigureDrawer.swift */,
+			);
+			path = FigureDrawer;
+			sourceTree = "<group>";
+		};
+		DD4CA546246C9A47000E805D /* SetGameExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				DD1527FF2469D2EB0084EA4B /* SetCardGameScoreSystem.swift */,
+				DD7282DB24546F6900B37DFE /* SetCardGameCheat.swift */,
+				DD79D3392455F6B500F5A188 /* SetCardGameBotMode.swift */,
+			);
+			path = SetGameExtensions;
+			sourceTree = "<group>";
+		};
+		DD4CA547246C9A7C000E805D /* SetGameCore */ = {
+			isa = PBXGroup;
+			children = (
+				DD4DEE7824505DB0009619BA /* SetGame.swift */,
+				DD4DEE7624505AC5009619BA /* SetCard.swift */,
+				DD4CA54C246C9ABD000E805D /* Grid.swift */,
+			);
+			path = SetGameCore;
+			sourceTree = "<group>";
+		};
 		DD4DEE39245049FC009619BA = {
 			isa = PBXGroup;
 			children = (
@@ -109,12 +151,12 @@
 		DD4DEE44245049FC009619BA /* Set */ = {
 			isa = PBXGroup;
 			children = (
-				DD4DEE7624505AC5009619BA /* SetCard.swift */,
-				DD4DEE7824505DB0009619BA /* SetGame.swift */,
 				DD4DEE49245049FC009619BA /* ViewController.swift */,
-				DD79D3392455F6B500F5A188 /* ComputerMode.swift */,
-				DD7282DB24546F6900B37DFE /* Cheat.swift */,
+				DDC017E32465CEA800FAD5CA /* SetCardViewCollection.swift */,
 				DD4DEE4B245049FC009619BA /* Main.storyboard */,
+				DD4CA547246C9A7C000E805D /* SetGameCore */,
+				DD4CA546246C9A47000E805D /* SetGameExtensions */,
+				DDB8CF7A2466A4CA002DB1FD /* SetCardView */,
 				DD4DEE7524504A12009619BA /* other files */,
 				DD4DEE53245049FD009619BA /* Info.plist */,
 			);
@@ -142,6 +184,7 @@
 		DD4DEE7524504A12009619BA /* other files */ = {
 			isa = PBXGroup;
 			children = (
+				DDC017DF246590E300FAD5CA /* Programming Project 3_ Graphical Set.pdf */,
 				DD1EBA0C245625B500E371A3 /* Programming Project 2_ Set.pdf */,
 				DD4DEE45245049FC009619BA /* AppDelegate.swift */,
 				DD4DEE47245049FC009619BA /* SceneDelegate.swift */,
@@ -149,6 +192,24 @@
 				DD4DEE50245049FD009619BA /* LaunchScreen.storyboard */,
 			);
 			path = "other files";
+			sourceTree = "<group>";
+		};
+		DD580EC824693CC500FD9B36 /* DrawStrategy */ = {
+			isa = PBXGroup;
+			children = (
+				DD580EC924693D3F00FD9B36 /* DrawStrategy.swift */,
+			);
+			path = DrawStrategy;
+			sourceTree = "<group>";
+		};
+		DDB8CF7A2466A4CA002DB1FD /* SetCardView */ = {
+			isa = PBXGroup;
+			children = (
+				DD580EC824693CC500FD9B36 /* DrawStrategy */,
+				DD4CA545246C89CE000E805D /* FigureDrawer */,
+				DD4ED75A246831D500617DB5 /* SetCardView.swift */,
+			);
+			path = SetCardView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -255,6 +316,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDC017E0246590E300FAD5CA /* Programming Project 3_ Graphical Set.pdf in Resources */,
 				DD4DEE52245049FD009619BA /* LaunchScreen.storyboard in Resources */,
 				DD1EBA0D245625B500E371A3 /* Programming Project 2_ Set.pdf in Resources */,
 				DD4DEE4F245049FD009619BA /* Assets.xcassets in Resources */,
@@ -283,13 +345,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD79D33A2455F6B500F5A188 /* ComputerMode.swift in Sources */,
+				DD580ECA24693D3F00FD9B36 /* DrawStrategy.swift in Sources */,
+				DD79D33A2455F6B500F5A188 /* SetCardGameBotMode.swift in Sources */,
 				DD4DEE4A245049FC009619BA /* ViewController.swift in Sources */,
+				DD4CA544246C45F1000E805D /* FigureDrawer.swift in Sources */,
 				DD4DEE46245049FC009619BA /* AppDelegate.swift in Sources */,
+				DD4CA54D246C9ABD000E805D /* Grid.swift in Sources */,
+				DD1528002469D2EB0084EA4B /* SetCardGameScoreSystem.swift in Sources */,
+				DDC017E42465CEA800FAD5CA /* SetCardViewCollection.swift in Sources */,
 				DD4DEE7924505DB0009619BA /* SetGame.swift in Sources */,
 				DD4DEE7724505AC5009619BA /* SetCard.swift in Sources */,
+				DD4ED75B246831D500617DB5 /* SetCardView.swift in Sources */,
 				DD4DEE48245049FC009619BA /* SceneDelegate.swift in Sources */,
-				DD7282DC24546F6900B37DFE /* Cheat.swift in Sources */,
+				DD7282DC24546F6900B37DFE /* SetCardGameCheat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

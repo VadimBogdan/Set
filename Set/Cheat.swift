@@ -9,17 +9,17 @@
 import Foundation
 import UIKit
 
-struct Cheat
+struct SetCardGameCheat
 {
-    private static var combinations = [[(UIButton,SetCard)]]()
+    private var combinations = [[(UIButton,SetCard)]]()
     ///
-    public static func detectSet(in buttonCardMap: [UIButton:SetCard]) -> [UIButton:SetCard]?
+    public mutating func detectSet(in buttonCardMap: [UIButton:SetCard]) -> [UIButton:SetCard]?
     {
         combinations = doCombinations(source: Array(buttonCardMap), takenBy: 3)
         return getMatchedSet(combinations: combinations)
     }
     
-    private static func getMatchedSet(combinations: [[(UIButton,SetCard)]]) -> [UIButton:SetCard]? {
+    private func getMatchedSet(combinations: [[(UIButton,SetCard)]]) -> [UIButton:SetCard]? {
         var matches = [UIButton:SetCard]()
         for i in combinations.indices {
             let j = 0
@@ -36,7 +36,7 @@ struct Cheat
     // Calculate the unique combinations of elements in an array
     // taken some number at a time when no element is allowed to repeat
     // https://stackoverflow.com/a/25879655
-    private static func doCombinations<T,K>(source: [(T,K)], takenBy : Int) -> [[(T,K)]] {
+    private func doCombinations<T,K>(source: [(T,K)], takenBy : Int) -> [[(T,K)]] {
         if(source.count == takenBy) {
             return [source]
         }

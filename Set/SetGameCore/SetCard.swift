@@ -11,19 +11,19 @@ import Foundation
 struct SetCard: Equatable
 {
     
-    let number: CardNumber
-    let color: CardColor
-    let shading: CardShading
-    let symbol: CardSymbol
+    let count: SetCardCountOfFigures
+    let color: SetCardFigureColor
+    let shading: SetCardFigureShading
+    let figure: SetCardFigure
     
     let identifier: Int
     
-    init(number: CardNumber, color: CardColor, shading: CardShading, symbol: CardSymbol) {
+    init(number: SetCardCountOfFigures, color: SetCardFigureColor, shading: SetCardFigureShading, figure: SetCardFigure) {
         identifier = SetCard.getIdentifier()
-        self.number = number
+        self.count = number
         self.color = color
         self.shading = shading
-        self.symbol = symbol
+        self.figure = figure
     }
     
     private static var identityFactory = 0

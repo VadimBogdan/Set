@@ -10,7 +10,6 @@
 		DD1528002469D2EB0084EA4B /* SetCardGameScoreSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1527FF2469D2EB0084EA4B /* SetCardGameScoreSystem.swift */; };
 		DD1EBA0D245625B500E371A3 /* Programming Project 2_ Set.pdf in Resources */ = {isa = PBXBuildFile; fileRef = DD1EBA0C245625B500E371A3 /* Programming Project 2_ Set.pdf */; };
 		DD4CA544246C45F1000E805D /* FigureDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4CA543246C45F1000E805D /* FigureDrawer.swift */; };
-		DD4CA54D246C9ABD000E805D /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4CA54C246C9ABD000E805D /* Grid.swift */; };
 		DD4DEE46245049FC009619BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4DEE45245049FC009619BA /* AppDelegate.swift */; };
 		DD4DEE48245049FC009619BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4DEE47245049FC009619BA /* SceneDelegate.swift */; };
 		DD4DEE4A245049FC009619BA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4DEE49245049FC009619BA /* ViewController.swift */; };
@@ -22,7 +21,9 @@
 		DD4DEE7724505AC5009619BA /* SetCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4DEE7624505AC5009619BA /* SetCard.swift */; };
 		DD4DEE7924505DB0009619BA /* SetGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4DEE7824505DB0009619BA /* SetGame.swift */; };
 		DD4ED75B246831D500617DB5 /* SetCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4ED75A246831D500617DB5 /* SetCardView.swift */; };
+		DD5419D7246D33CA00591F11 /* SetGameTwoPlayerMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5419D6246D33CA00591F11 /* SetGameTwoPlayerMode.swift */; };
 		DD580ECA24693D3F00FD9B36 /* DrawStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD580EC924693D3F00FD9B36 /* DrawStrategy.swift */; };
+		DD585DD7246E7ADE00DD789A /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD585DD6246E7ADE00DD789A /* Grid.swift */; };
 		DD7282DC24546F6900B37DFE /* SetCardGameCheat.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7282DB24546F6900B37DFE /* SetCardGameCheat.swift */; };
 		DD79D33A2455F6B500F5A188 /* SetCardGameBotMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD79D3392455F6B500F5A188 /* SetCardGameBotMode.swift */; };
 		DDC017E0246590E300FAD5CA /* Programming Project 3_ Graphical Set.pdf in Resources */ = {isa = PBXBuildFile; fileRef = DDC017DF246590E300FAD5CA /* Programming Project 3_ Graphical Set.pdf */; };
@@ -50,7 +51,6 @@
 		DD1527FF2469D2EB0084EA4B /* SetCardGameScoreSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardGameScoreSystem.swift; sourceTree = "<group>"; };
 		DD1EBA0C245625B500E371A3 /* Programming Project 2_ Set.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "Programming Project 2_ Set.pdf"; path = "../../../../Downloads/Programming Project 2_ Set.pdf"; sourceTree = "<group>"; };
 		DD4CA543246C45F1000E805D /* FigureDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FigureDrawer.swift; sourceTree = "<group>"; };
-		DD4CA54C246C9ABD000E805D /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Grid.swift; path = ../../../../.Trash/Grid.swift; sourceTree = "<group>"; };
 		DD4DEE42245049FC009619BA /* Set.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Set.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD4DEE45245049FC009619BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD4DEE47245049FC009619BA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -68,7 +68,9 @@
 		DD4DEE7624505AC5009619BA /* SetCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCard.swift; sourceTree = "<group>"; };
 		DD4DEE7824505DB0009619BA /* SetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGame.swift; sourceTree = "<group>"; };
 		DD4ED75A246831D500617DB5 /* SetCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardView.swift; sourceTree = "<group>"; };
+		DD5419D6246D33CA00591F11 /* SetGameTwoPlayerMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGameTwoPlayerMode.swift; sourceTree = "<group>"; };
 		DD580EC924693D3F00FD9B36 /* DrawStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawStrategy.swift; sourceTree = "<group>"; };
+		DD585DD6246E7ADE00DD789A /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Grid.swift; path = ../../../../Downloads/Grid.swift; sourceTree = "<group>"; };
 		DD7282DB24546F6900B37DFE /* SetCardGameCheat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardGameCheat.swift; sourceTree = "<group>"; };
 		DD79D3392455F6B500F5A188 /* SetCardGameBotMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardGameBotMode.swift; sourceTree = "<group>"; };
 		DDC017DF246590E300FAD5CA /* Programming Project 3_ Graphical Set.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "Programming Project 3_ Graphical Set.pdf"; path = "../../../../Downloads/Programming Project 3_ Graphical Set.pdf"; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				DD1527FF2469D2EB0084EA4B /* SetCardGameScoreSystem.swift */,
 				DD7282DB24546F6900B37DFE /* SetCardGameCheat.swift */,
 				DD79D3392455F6B500F5A188 /* SetCardGameBotMode.swift */,
+				DD5419D6246D33CA00591F11 /* SetGameTwoPlayerMode.swift */,
 			);
 			path = SetGameExtensions;
 			sourceTree = "<group>";
@@ -123,7 +126,7 @@
 			children = (
 				DD4DEE7824505DB0009619BA /* SetGame.swift */,
 				DD4DEE7624505AC5009619BA /* SetCard.swift */,
-				DD4CA54C246C9ABD000E805D /* Grid.swift */,
+				DD585DD6246E7ADE00DD789A /* Grid.swift */,
 			);
 			path = SetGameCore;
 			sourceTree = "<group>";
@@ -350,7 +353,7 @@
 				DD4DEE4A245049FC009619BA /* ViewController.swift in Sources */,
 				DD4CA544246C45F1000E805D /* FigureDrawer.swift in Sources */,
 				DD4DEE46245049FC009619BA /* AppDelegate.swift in Sources */,
-				DD4CA54D246C9ABD000E805D /* Grid.swift in Sources */,
+				DD585DD7246E7ADE00DD789A /* Grid.swift in Sources */,
 				DD1528002469D2EB0084EA4B /* SetCardGameScoreSystem.swift in Sources */,
 				DDC017E42465CEA800FAD5CA /* SetCardViewCollection.swift in Sources */,
 				DD4DEE7924505DB0009619BA /* SetGame.swift in Sources */,
@@ -358,6 +361,7 @@
 				DD4ED75B246831D500617DB5 /* SetCardView.swift in Sources */,
 				DD4DEE48245049FC009619BA /* SceneDelegate.swift in Sources */,
 				DD7282DC24546F6900B37DFE /* SetCardGameCheat.swift in Sources */,
+				DD5419D7246D33CA00591F11 /* SetGameTwoPlayerMode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

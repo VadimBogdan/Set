@@ -8,7 +8,9 @@
 
 import Foundation
 
-struct SetCardGameScoreSystem {
+struct SetCardGameScoreSystem
+{
+    
     private var score = 0
     private var onChangedHandler: ((Int)->Void)?
     

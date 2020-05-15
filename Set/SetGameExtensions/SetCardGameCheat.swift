@@ -10,6 +10,7 @@ import Foundation
 
 struct SetCardGameCheat
 {
+    
     public mutating func detectSet(in setCardViews: [SetCardView]) -> [[SetCardView]]?
     {
         return fromCombinationsToMatches(getCombinations(setCardViews))

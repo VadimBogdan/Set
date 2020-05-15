@@ -10,6 +10,7 @@ import Foundation
 
 struct SetCardGameBotMode
 {
+    
     private(set) var cooldown = 10.0
     
     private var action: (Timer) -> Void

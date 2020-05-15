@@ -11,7 +11,6 @@ import UIKit
 class SetCardViewCollection: UIView {
 
     private var needAddSet: (()->Void)?
-    private var needResetBotMode: (()->Void)?
     
     private var isDeckEmpty: (()->Bool)?
     
@@ -19,17 +18,35 @@ class SetCardViewCollection: UIView {
 
     private var selected = [SetCardView]()
     
-    private var score = SetCardGameScoreSystem()
+    // private var score = SetCardGameScoreSystem()
     private var cheat = SetCardGameCheat()
     
-    private var isSelectedCardsMakeAMatch: Bool {
-        get {
-            SetGame.match(set: selected.map { $0.setCard! })
-        }
+    private var twoPlayerMode = SetGameTwoPlayerMode()
+    
+    // for two player mode callbacks
+    
+    public func setOnPlayerHasHalfTime(_ callback: @escaping (Bool)->Void) {
+        twoPlayerMode.setOnPlayerHasHalfTime(callback)
     }
     
-    public func setOnScoreChanged(_ callback: @escaping (Int)->Void) {
-        score.setOnChangedHandler(callback)
+    public func setOnNextPlayerTurn(_ callback: @escaping (Bool)->Void) {
+        twoPlayerMode.setOnNextPlayerTurn(callback)
+    }
+    
+    public func setOnGameHasStarted(_ callback: @escaping (Bool)->Void) {
+        twoPlayerMode.setOnGameHasStarted(callback)
+    }
+    
+    public func setOnGameHasFinished(_ callback: @escaping ()->Void) {
+        twoPlayerMode.setOnGameHasFinished(callback)
+    }
+    
+    public func setOnScoreChangedPlayerOne(_ callback: @escaping (Int)->Void) {
+        twoPlayerMode.setOnScoreChangedPlayerOne(callback)
+    }
+    
+    public func setOnScoreChangedPlayerTwo(_ callback: @escaping (Int)->Void) {
+       twoPlayerMode.setOnScoreChangedPlayerTwo(callback)
     }
     
     public func setIsDeckEmpty(_ callback: @escaping ()->Bool) {
@@ -40,34 +57,43 @@ class SetCardViewCollection: UIView {
         needAddSet = callback
     }
     
-    public func setResetBotMode(_ callback: @escaping ()->Void) {
-        needResetBotMode = callback
+    private var isSelectedCardsMakeAMatch: Bool {
+        get {
+            SetGame.match(set: selected.map { $0.setCard! })
+        }
     }
     
     ///
     // Public API
+    
+    public var isTwoPlayerModeEnabled: Bool {
+        return twoPlayerMode.isEnabled
+    }
     ///
-    public func cheatSet() -> Bool {
+    public func cheatSet() {
         if isSelectedCardsMakeAMatch {
             respondToMatchedSet(isDeckEmpty?() ?? true)
-            return false
         } else {
-            guard let matches = cheat.detectSet(in: subviewsAsSetCardViews()) else { return false }
+            guard let matches = cheat.detectSet(in: setCardViews()) else { return }
             deselectSelectedSetCardViews()
             matches[0].forEach
             {
                 setCardViewHasBeenTouched(setCardView: $0)
             }
-            return true
         }
     }
     
     public func add(set: [SetCard]?) {
         guard let set = set else { return }
-        assert(subviewsAsSetCardViews().count < 81, "Number of set cards cannot be larger than 81.")
+        assert(setCardViews().count < 81, "Number of set cards cannot be larger than 81.")
         doPenaltyIfSomeMatchesAvailable()
-        needResetBotMode?()
         updateSubviews(set)
+    }
+    
+    // true - playerOne, false - playerTwo
+    public func startPlayerTurn(turn: Bool) {
+        twoPlayerMode.start(turn: turn)
+        enableSetCardViews()
     }
     
     public func initialSetCards(_ setCards: [SetCard]) {
@@ -75,16 +101,32 @@ class SetCardViewCollection: UIView {
     }
     
     public func reset() {
-        subviewsAsSetCardViews().forEach { $0.removeFromSuperview() }
+        setCardViews().forEach { $0.removeFromSuperview() }
         selected.removeAll()
-        score.reset()
+        twoPlayerMode.reset()
+    }
+    
+    public func deselectSelected() {
+        if isSelectedCardsMakeAMatch {
+            respondToMatchedSet(isDeckEmpty?() ?? true)
+        } else {
+            deselectSelectedSetCardViews()
+        }
+    }
+    
+    public func enableSetCardViews() {
+        setCardViews().forEach { $0.isEnabled = true }
+    }
+    
+    public func disableSetCardViews() {
+        setCardViews().forEach { $0.isEnabled = false }
     }
     
     fileprivate func doPenaltyIfSomeMatchesAvailable() {
         /// Penalty for not matched matches on screen
         if selected.count != 3 {
-            if let matches = cheat.detectSet(in: subviewsAsSetCardViews()) {
-                score.update(-matches.count)
+            if let matches = cheat.detectSet(in: setCardViews()) {
+                twoPlayerMode.updateScore(-matches.count)
             }
         }
     }
@@ -109,6 +151,7 @@ class SetCardViewCollection: UIView {
             $0.addTarget(self, action: #selector(setCardViewHasBeenTouched), for: .touchUpInside)
             $0.backgroundColor = .clear
             $0.contentMode = .redraw
+            $0.isEnabled = false
             addSubview($0)
         }
         setNeedsLayout()
@@ -119,6 +162,7 @@ class SetCardViewCollection: UIView {
             matchIsFoundButDeckIsEmpty()
         } else {
             needAddSet?()
+            twoPlayerMode.playerDealedSetCards()
         }
     }
     
@@ -138,7 +182,7 @@ class SetCardViewCollection: UIView {
     }
     
     fileprivate func deselectSetCardView(_ setCardView: SetCardView) {
-        score.update(.deselection)
+        twoPlayerMode.updateScore(.deselection)
         selected.remove(setCardView)
         setCardView.deselect()
     }
@@ -164,21 +208,43 @@ class SetCardViewCollection: UIView {
         }
     }
     
+    @objc public func handleSwipeGestures(gesture: UISwipeGestureRecognizer) {
+        if !twoPlayerMode.isEnabled { return }
+        if gesture.direction == .down {
+            needAddSet?()
+            twoPlayerMode.playerDealedSetCards()
+        }
+    }
+    
+    @objc public func handleRotationGestures(gesture: UIRotationGestureRecognizer) {
+        if !twoPlayerMode.isEnabled { return }
+        if gesture.state == .ended {
+            reshuffleSetCardViews()
+        }
+    }
+    
+    fileprivate func reshuffleSetCardViews() {
+        let shuffled = setCardViews().map { $0.setCard }.shuffled()
+        for shuffledIndex in shuffled.indices {
+            setCardViews()[shuffledIndex].setNewSetCard(setCard: shuffled[shuffledIndex]!)
+        }
+    }
+    
     fileprivate func handleThreeSelectedViewCards() {
         if isSelectedCardsMakeAMatch {
             selected.forEach { $0.select(with: SetCardViewBorderColors.correct) }
-            score.matched(subviews.count)
+            twoPlayerMode.updateScoreMatched(subviews.count)
         } else {
-            score.notMatched(subviewsAsSetCardViews().count)
+            twoPlayerMode.updateScoreNotMatched(setCardViews().count)
             selected.forEach { $0.select(with: SetCardViewBorderColors.mistake) }
         }
     }
     
     override func layoutSubviews() {
         grid.frame = bounds
-        grid.cellCount = subviewsAsSetCardViews().count
+        grid.cellCount = setCardViews().count
         for index in 0..<grid.cellCount {
-            subviewsAsSetCardViews()[index].frame = grid[index]!.inset(by: UIEdgeInsets(top: 8.5, left: 3.5, bottom: 8.5, right: 3.5))
+            setCardViews()[index].frame = grid[index]!.inset(by: UIEdgeInsets(top: 8.5, left: 3.5, bottom: 8.5, right: 3.5))
         }
     }
     
@@ -186,7 +252,7 @@ class SetCardViewCollection: UIView {
         return set.map { SetCardView(frame: frame, setCard: $0) }
     }
     
-    fileprivate func subviewsAsSetCardViews() -> [SetCardView] {
+    fileprivate func setCardViews() -> [SetCardView] {
         return subviews as! [SetCardView]
     }
     

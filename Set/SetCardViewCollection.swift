@@ -52,7 +52,7 @@ class SetCardViewCollection: UIView {
             respondToMatchedSet(isDeckEmpty?() ?? true)
             return false
         } else {
-            guard let matches = cheat.detectSet(in: subviewsAsSetCardViews()) else { return false }
+            guard let matches = cheat.detectSet(in: setCardViews()) else { return false }
             deselectSelectedSetCardViews()
             matches[0].forEach
             {
@@ -64,7 +64,7 @@ class SetCardViewCollection: UIView {
     
     public func add(set: [SetCard]?) {
         guard let set = set else { return }
-        assert(subviewsAsSetCardViews().count < 81, "Number of set cards cannot be larger than 81.")
+        assert(setCardViews().count < 81, "Number of set cards cannot be larger than 81.")
         doPenaltyIfSomeMatchesAvailable()
         needResetBotMode?()
         updateSubviews(set)
@@ -75,7 +75,7 @@ class SetCardViewCollection: UIView {
     }
     
     public func reset() {
-        subviewsAsSetCardViews().forEach { $0.removeFromSuperview() }
+        setCardViews().forEach { $0.removeFromSuperview() }
         selected.removeAll()
         score.reset()
     }
@@ -83,7 +83,7 @@ class SetCardViewCollection: UIView {
     fileprivate func doPenaltyIfSomeMatchesAvailable() {
         /// Penalty for not matched matches on screen
         if selected.count != 3 {
-            if let matches = cheat.detectSet(in: subviewsAsSetCardViews()) {
+            if let matches = cheat.detectSet(in: setCardViews()) {
                 score.update(-matches.count)
             }
         }
@@ -164,21 +164,40 @@ class SetCardViewCollection: UIView {
         }
     }
     
+    @objc public func handleSwipeGestures(gesture: UISwipeGestureRecognizer) {
+        if gesture.direction == .down {
+            needAddSet?()
+        }
+    }
+    
+    @objc public func handleRotationGestures(gesture: UIRotationGestureRecognizer) {
+        if gesture.state == .ended {
+            reshuffleSetCardViews()
+        }
+    }
+    
+    fileprivate func reshuffleSetCardViews() {
+        let shuffled = setCardViews().map { $0.setCard }.shuffled()
+        for shuffledIndex in shuffled.indices {
+            setCardViews()[shuffledIndex].setNewSetCard(setCard: shuffled[shuffledIndex]!)
+        }
+    }
+    
     fileprivate func handleThreeSelectedViewCards() {
         if isSelectedCardsMakeAMatch {
             selected.forEach { $0.select(with: SetCardViewBorderColors.correct) }
             score.matched(subviews.count)
         } else {
-            score.notMatched(subviewsAsSetCardViews().count)
+            score.notMatched(setCardViews().count)
             selected.forEach { $0.select(with: SetCardViewBorderColors.mistake) }
         }
     }
     
     override func layoutSubviews() {
         grid.frame = bounds
-        grid.cellCount = subviewsAsSetCardViews().count
+        grid.cellCount = setCardViews().count
         for index in 0..<grid.cellCount {
-            subviewsAsSetCardViews()[index].frame = grid[index]!.inset(by: UIEdgeInsets(top: 8.5, left: 3.5, bottom: 8.5, right: 3.5))
+            setCardViews()[index].frame = grid[index]!.inset(by: UIEdgeInsets(top: 8.5, left: 3.5, bottom: 8.5, right: 3.5))
         }
     }
     
@@ -186,7 +205,7 @@ class SetCardViewCollection: UIView {
         return set.map { SetCardView(frame: frame, setCard: $0) }
     }
     
-    fileprivate func subviewsAsSetCardViews() -> [SetCardView] {
+    fileprivate func setCardViews() -> [SetCardView] {
         return subviews as! [SetCardView]
     }
     

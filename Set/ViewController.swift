@@ -18,6 +18,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var dealSetButton: UIButton!
     @IBOutlet weak var botModeButton: UIButton!
     @IBOutlet weak var scoreLabel: UILabel!
+    @IBOutlet weak var newGameButton: UIButton!
+    @IBOutlet weak var cheatButton: UIButton!
+    @IBOutlet var mainView: UIView!
     
     @IBOutlet weak var setCardViewCollection: SetCardViewCollection!
     
@@ -55,7 +58,25 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addGestureRecognizersToSetCardViewCollection()
+        scaleFonts()
         start()
+    }
+
+    private func scaleFonts() {
+        dealSetButton.titleLabel?.font = scaledFont
+        newGameButton.titleLabel?.font = scaledFont
+        botModeButton.titleLabel?.font = scaledFont
+        cheatButton.titleLabel?.font = scaledFont
+        scoreLabel.font = scaledFont
+    }
+
+    fileprivate func addGestureRecognizersToSetCardViewCollection() {
+        let rotationRecognizer = UIRotationGestureRecognizer(target: setCardViewCollection, action: #selector(SetCardViewCollection.handleRotationGestures(gesture:)))
+        let swipeDownRecognizer = UISwipeGestureRecognizer(target: setCardViewCollection, action: #selector(SetCardViewCollection.handleSwipeGestures(gesture:)))
+        swipeDownRecognizer.direction = .down
+        setCardViewCollection.addGestureRecognizer(swipeDownRecognizer)
+        setCardViewCollection.addGestureRecognizer(rotationRecognizer)
     }
     
     private func start() {
@@ -102,5 +123,16 @@ extension Array where Element: Equatable {
     mutating func remove(_ object: Element) {
         guard let index = firstIndex(of: object) else {return}
         remove(at: index)
+    }
+}
+
+extension ViewController {
+    fileprivate var controlsFontSizeToMainViewBoundsHeight: CGFloat {
+        mainView.bounds.height * 0.04
+    }
+    fileprivate var scaledFont: UIFont {
+        var font = UIFont.preferredFont(forTextStyle: .body).withSize(controlsFontSizeToMainViewBoundsHeight)
+        font = UIFontMetrics(forTextStyle: .body).scaledFont(for: font)
+        return font
     }
 }

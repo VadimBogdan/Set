@@ -9,10 +9,23 @@
 import UIKit
 
 class SetCardView: UIButton {
+    
+    public var isFaceUp: Bool = false {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    
     private(set) var setCard: SetCard? {
         didSet {
             setNeedsDisplay()
         }
+    }
+    
+    private(set) var faceDownColor: UIColor = #colorLiteral(red: 0.7803921569, green: 0.7803921569, blue: 0.8, alpha: 1)
+    
+    public func setFaceDownColor(_ color: UIColor) {
+        faceDownColor = color
     }
     
     public func setNewSetCard(setCard: SetCard) {
@@ -21,13 +34,18 @@ class SetCardView: UIButton {
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        let roundedRect = UIBezierPath(roundedRect: rect, cornerRadius: 8.0)
-        UIColor.white.setFill()
-        roundedRect.fill()
-        chooseDrawStrategy()
+        let roundedRect = UIBezierPath(roundedRect: rect, cornerRadius: 10.0)
+        if (!isFaceUp) {
+            faceDownColor.setFill()
+            roundedRect.fill()
+        } else {
+            UIColor.white.setFill()
+            roundedRect.fill()
+            chooseDrawStrategy()
+        }
     }
            
-    func drawShading(shading: SetCardFigureShading, with color: UIColor, in path: UIBezierPath) {
+    private func drawShading(shading: SetCardFigureShading, with color: UIColor, in path: UIBezierPath) {
         color.setFill()
         color.setStroke()
         switch (shading) {
@@ -42,7 +60,7 @@ class SetCardView: UIButton {
         }
      }
     
-    func chooseDrawStrategy() {
+    private func chooseDrawStrategy() {
         guard let setCard = setCard else { return }
         let twoOrOne: Bool = bounds.width/bounds.height <= 0.5 && (setCard.count == .one || setCard.count == .two)
         let three: Bool = bounds.width/bounds.height <= 0.333 && setCard.count == .three
@@ -55,7 +73,7 @@ class SetCardView: UIButton {
         strategy.draw()
     }
 
-    func drawStripedShadingForPath(_ pathOfSymbol: UIBezierPath) {
+    private func drawStripedShadingForPath(_ pathOfSymbol: UIBezierPath) {
         let context = UIGraphicsGetCurrentContext()
         context?.saveGState()
         let bounds = pathOfSymbol.bounds
@@ -72,12 +90,14 @@ class SetCardView: UIButton {
     }
     
     func select(with colour: UIColor) {
-        layer.borderWidth = 5
+        layer.borderWidth = 2.0
+        layer.cornerRadius = 15.0
         layer.borderColor = colour.cgColor
     }
     
     func deselect() {
-        layer.borderWidth = 0.0
+        layer.borderWidth = 2.0
+        layer.cornerRadius = 0.0
         layer.borderColor = UIColor.clear.cgColor
     }
     

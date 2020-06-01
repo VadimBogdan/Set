@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SetCardGameBotMode
+struct SetCardGamePhoneMode
 {
     private(set) var cooldown = 10.0
     

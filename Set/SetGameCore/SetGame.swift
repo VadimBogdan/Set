@@ -34,7 +34,7 @@ struct SetGame
     
     public static func match(set: [SetCard]) -> Bool {
         if set.count < 3 { return false }
-        
+
         if !(((set[0].count == set[1].count) || (set[0].count == set[2].count)) ^ (set[1].count != set[2].count)) {
             return false
         }

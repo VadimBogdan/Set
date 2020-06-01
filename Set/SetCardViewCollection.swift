@@ -8,18 +8,20 @@
 
 import UIKit
 
-class SetCardViewCollection: UIView {
+class SetCardViewCollection: UIView, SetCardGameScoringSystemDelegate {
+    
+    public var delegate: SetCardViewCollectionDelegate? {
+        didSet {
+            score.delegate = self
+        }
+    }
 
-    private var needAddSet: (()->Void)?
-    private var needResetBotMode: (()->Void)?
-    
-    private var isDeckEmpty: (()->Bool)?
-    
     private lazy var grid = Grid(layout: .aspectRatio(6.0/5.0), frame: bounds)
-
-    private var selected = [SetCardView]()
     
-    private var score = SetCardGameScoreSystem()
+    private lazy var selected = [SetCardView]()
+    
+    private lazy var score = SetCardGameScoringSystem()
+    
     private var cheat = SetCardGameCheat()
     
     private var isSelectedCardsMakeAMatch: Bool {
@@ -28,31 +30,23 @@ class SetCardViewCollection: UIView {
         }
     }
     
-    public func setOnScoreChanged(_ callback: @escaping (Int)->Void) {
-        score.setOnChangedHandler(callback)
+    // Animations
+    private lazy var animator = UIDynamicAnimator(referenceView: superview!)
+    private lazy var cardStartFlyingOutBehavior = SetCardStartFlyingOutBehavior(in: animator)
+    private lazy var cardEndFlyingOutBehavior = SetCardEndFlyingOutBehavior(in: animator)
+
+    func setCardGameScoringSystem(newScore: Int, from: SetCardGameScoringSystem) {
+        delegate?.setCardViewCollection(currentScore: newScore, self)
     }
-    
-    public func setIsDeckEmpty(_ callback: @escaping ()->Bool) {
-        isDeckEmpty = callback
-    }
-    
-    public func setAddSet(_ callback: @escaping ()->Void) {
-        needAddSet = callback
-    }
-    
-    public func setResetBotMode(_ callback: @escaping ()->Void) {
-        needResetBotMode = callback
-    }
-    
     ///
     // Public API
     ///
     public func cheatSet() -> Bool {
         if isSelectedCardsMakeAMatch {
-            respondToMatchedSet(isDeckEmpty?() ?? true)
+            self.respondToMatchedSet(self.delegate?.setCardViewCollection(isDeckEmptyFrom: self) ?? true)
             return false
         } else {
-            guard let matches = cheat.detectSet(in: setCardViews()) else { return false }
+            guard let matches = cheat.detectSet(in: setCardViewsThatNeedToBeRearranged) else { return false }
             deselectSelectedSetCardViews()
             matches[0].forEach
             {
@@ -66,7 +60,7 @@ class SetCardViewCollection: UIView {
         guard let set = set else { return }
         assert(setCardViews().count < 81, "Number of set cards cannot be larger than 81.")
         doPenaltyIfSomeMatchesAvailable()
-        needResetBotMode?()
+        delegate?.setCardViewCollection(resetBotModeFrom: self)
         updateSubviews(set)
     }
     
@@ -91,40 +85,127 @@ class SetCardViewCollection: UIView {
     
     fileprivate func updateSubviews(_ set: [SetCard]) {
         if isSelectedCardsMakeAMatch {
-            replaceMatchedSetCards(set)
+            replaceMatchedSetCards(fromSetToSetCardView(set))
         } else {
             addSetCardViews(fromSetToSetCardView(set))
         }
     }
     
-    fileprivate func replaceMatchedSetCards(_ set: [SetCard]) {
+    fileprivate func replaceMatchedSetCards(_ set: [SetCardView]) {
         for index in selected.indices {
-            selected[index].setNewSetCard(setCard: set[index])
+            let card = selected[index]
+            replacingFrames.append(selected[index].frame)
+            animateFlyingOut(card)
         }
+        animateReplacingDeal(set)
         deselectSelectedSetCardViews()
     }
     
-    fileprivate func addSetCardViews(_ newSetCardViews: [SetCardView]) {
-        newSetCardViews.forEach {
-            $0.addTarget(self, action: #selector(setCardViewHasBeenTouched), for: .touchUpInside)
-            $0.backgroundColor = .clear
-            $0.contentMode = .redraw
-            addSubview($0)
+    fileprivate var replacingFrames = [CGRect]()
+    
+    fileprivate func animateFlyingOut(_ card: SetCardView) {
+        bringSubviewToFront(card)
+        cardStartFlyingOutBehavior.addItem(card)
+        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { timer in
+            self.cardStartFlyingOutBehavior.removeItem(card)
+            let pileFrame = self.delegate!.setCardViewCollection(discardPileFrameFor: self)
+            self.cardEndFlyingOutBehavior.addItem(card, pileFrame: pileFrame)
         }
-        setNeedsLayout()
+    }
+    
+    fileprivate func animateReplacingDeal(_ set: [SetCardView]) {
+        var delay = AnimationConstants.dealCardDelay * 2
+        for index in replacingFrames.indices {
+            let card = set[index]
+            addSubview(card)
+            fillCardPropeties(card)
+            card.frame = delegate!.setCardViewCollection(deckFrameFor: self)
+            let frame = replacingFrames[index]
+            UIViewPropertyAnimator.runningPropertyAnimator(
+                withDuration: 0.5,
+                delay: delay,
+                options: [.allowAnimatedContent],
+                animations: {
+                    card.frame = frame
+                },
+                completion: { finish in
+                    if (card.isFaceUp) { return }
+                    UIView.transition(
+                        with: card,
+                        duration: 0.55,
+                        options: [.transitionFlipFromLeft],
+                        animations: {
+                            card.isFaceUp = true
+                    })
+            })
+            
+            delay += AnimationConstants.dealCardDelay
+        }
+        replacingFrames.removeAll()
+    }
+    
+    fileprivate var throttlingTimer: Timer?
+    fileprivate var intermediaryStorage = [SetCardView]()
+    
+    fileprivate func fillCardPropeties(_ card: SetCardView) {
+        card.addTarget(self, action: #selector(setCardViewHasBeenTouched), for: .touchUpInside)
+        card.backgroundColor = .clear
+        card.contentMode = .redraw
+        card.autoresizingMask = [.flexibleTopMargin,.flexibleBottomMargin,.flexibleLeftMargin,.flexibleRightMargin]
+    }
+    
+    fileprivate func addSetCardViews(_ set: [SetCardView]) {
+        set.forEach {
+            fillCardPropeties($0)
+            intermediaryStorage.append($0)
+        }
+        if throttlingTimer == nil || throttlingTimer?.isValid == false {
+            throttlingTimer = Timer.scheduledTimer(
+                timeInterval: 0.01,
+                target: self,
+                selector: #selector(throttleUpdates),
+                userInfo: intermediaryStorage.count,
+                repeats: false
+            )
+            needsRearange = true
+        }
+    }
+    
+    @objc fileprivate func throttleUpdates(timer: Timer) {
+        if (timer.userInfo as? Int) == intermediaryStorage.count {
+            intermediaryStorage.forEach {
+                addSubview($0)
+                $0.frame = delegate!.setCardViewCollection(deckFrameFor: self)
+            }
+            intermediaryStorage = []
+            self.setNeedsLayout()
+            self.layoutIfNeeded()
+        } else {
+            Timer.scheduledTimer(
+                timeInterval: 0.01,
+                target: self,
+                selector: #selector(throttleUpdates),
+                userInfo: intermediaryStorage.count,
+                repeats: false
+            )
+        }
     }
     
     fileprivate func respondToMatchedSet(_ deckIsEmpty: Bool) {
         if deckIsEmpty {
             matchIsFoundButDeckIsEmpty()
+            needsRearange = true
+            setNeedsLayout()
+            layoutIfNeeded()
         } else {
-            needAddSet?()
+            delegate?.setCardViewCollection(addSetTo: self)
+            needsRearange = false
         }
     }
     
     fileprivate func matchIsFoundButDeckIsEmpty() {
-        selected.forEach { $0.removeFromSuperview() }
-        selected.removeAll()
+        selected.forEach { animateFlyingOut($0) }
+        deselectSelectedSetCardViews()
     }
     
     fileprivate func deselectSelectedSetCardViews() {
@@ -148,7 +229,7 @@ class SetCardViewCollection: UIView {
         if isSelectedCardsMakeAMatch {
             /// Don't select matched cards until they're replaced.
             if selected.contains(setCardView) { return }
-            respondToMatchedSet(isDeckEmpty?() ?? true)
+            respondToMatchedSet(delegate?.setCardViewCollection(isDeckEmptyFrom: self) ?? true)
         } else if selected.count == 3 {
             deselectSelectedSetCardViews()
         }
@@ -162,11 +243,14 @@ class SetCardViewCollection: UIView {
         if selected.count == 3 {
             handleThreeSelectedViewCards()
         }
+        if selected.count == 1 {
+            score.firstTouch()
+        }
     }
     
     @objc public func handleSwipeGestures(gesture: UISwipeGestureRecognizer) {
         if gesture.direction == .down {
-            needAddSet?()
+            delegate?.setCardViewCollection(addSetTo: self)
         }
     }
     
@@ -193,12 +277,57 @@ class SetCardViewCollection: UIView {
         }
     }
     
+    // helper field to adjust deal animation when flying out cards occur
+    fileprivate var needsRearange = false
+    
     override func layoutSubviews() {
+        
+        if animator.isRunning { return }
+        else if setCardViews().count == 0 { return }
+        else if !needsRearange { return }
+        
         grid.frame = bounds
         grid.cellCount = setCardViews().count
-        for index in 0..<grid.cellCount {
-            setCardViews()[index].frame = grid[index]!.inset(by: UIEdgeInsets(top: 8.5, left: 3.5, bottom: 8.5, right: 3.5))
+        let rearrangedCardIndices = 0..<self.setCardViewsThatNeedToBeRearranged.count
+        for index in rearrangedCardIndices {
+            UIViewPropertyAnimator.runningPropertyAnimator(
+                withDuration: 0.25,
+                delay: 0,
+                options: [.allowAnimatedContent],
+                animations: {
+                    self.setCardViews()[index].frame = self.grid[index]!.inset(by: UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4))
+                }
+            )
         }
+        var delay = 0.25
+        for index in self.setCardViewsThatNeedToBeRearranged.count..<setCardViews().count {
+            let card = setCardViews()[index]
+            UIViewPropertyAnimator.runningPropertyAnimator(
+                withDuration: 0.5,
+                delay: delay,
+                options: [.allowAnimatedContent],
+                animations: {
+                    card.frame = self.grid[index]!.inset(by: UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4))
+                },
+                completion: { finish in
+                    if !self.setCardViews().indices.contains(index) { return }
+                    if (card.isFaceUp) { return }
+                    UIView.transition(
+                        with: card,
+                        duration: 0.55,
+                        options: [.transitionFlipFromLeft],
+                        animations: {
+                            card.isFaceUp = true
+                    })
+                }
+            )
+            delay += AnimationConstants.dealCardDelay
+        }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        needsRearange = true
     }
     
     fileprivate func fromSetToSetCardView(_ set: [SetCard]) -> [SetCardView] {
@@ -207,6 +336,14 @@ class SetCardViewCollection: UIView {
     
     fileprivate func setCardViews() -> [SetCardView] {
         return subviews as! [SetCardView]
+    }
+    
+    fileprivate var setCardViewsThatNeedToBeRearranged: [SetCardView] {
+        return setCardViews().filter {
+            $0.isFaceUp &&
+            !cardStartFlyingOutBehavior.contains($0)  &&
+            !cardEndFlyingOutBehavior.contains($0)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -231,4 +368,8 @@ struct SetCardViewBorderColors {
     public static let select = UIColor.blue
     public static let correct = UIColor.green
     public static let mistake = UIColor.red
+}
+
+struct AnimationConstants {
+    public static let dealCardDelay = 0.15
 }

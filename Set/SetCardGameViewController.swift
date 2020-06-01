@@ -9,35 +9,30 @@
 import UIKit
 
 class SetCardGameViewController: UIViewController, SetCardViewCollectionDelegate {
-    
+
     private var game = SetGame()
     
-    // Play vs iPhone (bot)
-    private var botMode: SetCardGameBotMode?
+    // play vs your iPhone/iPad (bot)
+    private var gameAgainstPhoneMode: SetCardGamePhoneMode?
     
-    @IBOutlet weak var dealButton: UIButton! {
-        didSet {
-            dealButton.contentEdgeInsets  = UIEdgeInsets(top: 25, left: 25, bottom: 25, right: 25)
-        }
-    }
+    @IBOutlet weak var dealButton: UIButton!
     @IBOutlet weak var botModeButton: UIButton!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var newGameButton: UIButton!
     @IBOutlet weak var cheatButton: UIButton!
-    @IBOutlet var mainView: UIView!
     
     @IBOutlet weak var setCardViewCollection: SetCardViewCollection!
     
     @IBAction func activateBotMode(_ sender: UIButton) {
-        botMode = SetCardGameBotMode { _ in
+        gameAgainstPhoneMode = SetCardGamePhoneMode { _ in
             if self.setCardViewCollection.cheatSet() {
                 self.botModeButton.setTitle("😂", for: .disabled)
             } else {
                 self.botModeButton.setTitle("😢", for: .disabled)
             }
         }
-        botMode?.setAnticipation { _ in self.botModeButton.setTitle("😁", for: .disabled) }
-        botMode?.setThink { self.botModeButton.setTitle("🤔", for: .disabled) }
+        gameAgainstPhoneMode?.setAnticipation { _ in self.botModeButton.setTitle("😁", for: .disabled) }
+        gameAgainstPhoneMode?.setThink { self.botModeButton.setTitle("🤔", for: .disabled) }
         setCardViewCollection(resetBotModeFrom: setCardViewCollection)
         botModeButton.isEnabled = false
     }
@@ -54,8 +49,10 @@ class SetCardGameViewController: UIViewController, SetCardViewCollectionDelegate
         game = SetGame()
         botModeButton.setTitle("Bot", for: .normal)
         dealButton.isEnabled = true
+        dealButton.titleLabel?.alpha = 1.0
+        dealButton.alpha = 1.0
         botModeButton.isEnabled = true
-        botMode?.stop()
+        gameAgainstPhoneMode?.stop()
         setCardViewCollection.reset()
         start()
     }
@@ -65,6 +62,10 @@ class SetCardGameViewController: UIViewController, SetCardViewCollectionDelegate
         addGestureRecognizersToSetCardViewCollection()
         scaleFonts()
         start()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        scaleFonts()
     }
 
     private func scaleFonts() {
@@ -86,20 +87,37 @@ class SetCardGameViewController: UIViewController, SetCardViewCollectionDelegate
     private func start() {
         setCardViewCollection.delegate = self
         (1...4).forEach { _ in
-            setCardViewCollection.add(set: game.getSet())
+            setCardViewCollection(addSetTo: setCardViewCollection)
         }
     }
     
     func setCardViewCollection(addSetTo: SetCardViewCollection) {
         addSetTo.add(set: game.getSet())
         if setCardViewCollection(isDeckEmptyFrom: addSetTo) {
-            dealButton.isEnabled = !setCardViewCollection(isDeckEmptyFrom: addSetTo)
+            dealButton.isEnabled = false
+            UIViewPropertyAnimator.runningPropertyAnimator(
+                withDuration: 0.35,
+                delay: 0,
+                options: [],
+                animations: {
+                    self.dealButton.titleLabel!.alpha = 0.0
+                },
+                completion: { finish in
+                    UIViewPropertyAnimator.runningPropertyAnimator(
+                        withDuration: 0.40,
+                        delay: 0.0,
+                        options: [],
+                        animations: {
+                            self.dealButton.alpha = 0.0
+                    })
+                }
+            )
         }
     }
     
     func setCardViewCollection(resetBotModeFrom: SetCardViewCollection) {
-        botMode?.stop()
-        botMode?.thinking()
+        gameAgainstPhoneMode?.stop()
+        gameAgainstPhoneMode?.thinking()
     }
     
     func setCardViewCollection(currentScore: Int, _ from: SetCardViewCollection) {
@@ -109,10 +127,14 @@ class SetCardGameViewController: UIViewController, SetCardViewCollectionDelegate
     func setCardViewCollection(isDeckEmptyFrom: SetCardViewCollection) -> Bool {
         return game.deck.count == 0
     }
+    
     func setCardViewCollection(deckFrameFor: SetCardViewCollection) -> CGRect {
-        return dealButton.frame
+        return dealButton.convert(dealButton.bounds.inset(by: UIEdgeInsets(top: 2, left: 1, bottom: 2, right: 1)), to: deckFrameFor)
     }
-
+    
+    func setCardViewCollection(discardPileFrameFor: SetCardViewCollection) -> CGRect {
+        return scoreLabel.convert(scoreLabel.bounds.inset(by: UIEdgeInsets(top: -15, left: -25, bottom: -15, right: -25)), to: discardPileFrameFor.superview!)
+    }
 }
 extension Array where Element: Equatable {
     mutating func remove(_ object: Element) {
@@ -123,10 +145,19 @@ extension Array where Element: Equatable {
 
 extension SetCardGameViewController {
     fileprivate var controlsFontSizeToMainViewBoundsHeight: CGFloat {
-        mainView.bounds.height * 0.0325
+        view.bounds.height * 0.025
+    }
+    fileprivate var controlsFontSizeToMainViewBoundsWidth: CGFloat {
+        view.bounds.width * 0.025
     }
     fileprivate var scaledFont: UIFont {
-        var font = UIFont.preferredFont(forTextStyle: .body).withSize(controlsFontSizeToMainViewBoundsHeight)
+        var font: UIFont
+        if view.bounds.height < view.bounds.width {
+            font = UIFont.preferredFont(forTextStyle: .body).withSize(controlsFontSizeToMainViewBoundsWidth)
+        } else {
+            font = UIFont.preferredFont(forTextStyle: .body).withSize(controlsFontSizeToMainViewBoundsHeight)
+
+        }
         font = UIFontMetrics(forTextStyle: .body).scaledFont(for: font)
         return font
     }

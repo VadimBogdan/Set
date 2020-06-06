@@ -8,7 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		DD1528002469D2EB0084EA4B /* SetCardGameScoringSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1527FF2469D2EB0084EA4B /* SetCardGameScoringSystem.swift */; };
-		DD1EBA0D245625B500E371A3 /* Programming Project 2_ Set.pdf in Resources */ = {isa = PBXBuildFile; fileRef = DD1EBA0C245625B500E371A3 /* Programming Project 2_ Set.pdf */; };
+		DD1722FC248567F300BFDE2B /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1722F8248567F200BFDE2B /* Card.swift */; };
+		DD1722FD248567F300BFDE2B /* Concentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1722F9248567F200BFDE2B /* Concentration.swift */; };
+		DD1722FE248567F300BFDE2B /* ConcentrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1722FA248567F300BFDE2B /* ConcentrationViewController.swift */; };
+		DD1722FF248567F300BFDE2B /* ConcentrationThemeChooserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1722FB248567F300BFDE2B /* ConcentrationThemeChooserViewController.swift */; };
 		DD4CA544246C45F1000E805D /* FigureDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4CA543246C45F1000E805D /* FigureDrawer.swift */; };
 		DD4DEE46245049FC009619BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4DEE45245049FC009619BA /* AppDelegate.swift */; };
 		DD4DEE48245049FC009619BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4DEE47245049FC009619BA /* SceneDelegate.swift */; };
@@ -27,9 +30,12 @@
 		DD585DDB246ED6E900DD789A /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD585DDA246ED6E900DD789A /* Grid.swift */; };
 		DD7282DC24546F6900B37DFE /* SetCardGameCheat.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7282DB24546F6900B37DFE /* SetCardGameCheat.swift */; };
 		DD79D33A2455F6B500F5A188 /* SetCardGamePhoneMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD79D3392455F6B500F5A188 /* SetCardGamePhoneMode.swift */; };
-		DDC017E0246590E300FAD5CA /* Programming Project 3_ Graphical Set.pdf in Resources */ = {isa = PBXBuildFile; fileRef = DDC017DF246590E300FAD5CA /* Programming Project 3_ Graphical Set.pdf */; };
 		DDC017E42465CEA800FAD5CA /* SetCardViewCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC017E32465CEA800FAD5CA /* SetCardViewCollection.swift */; };
 		DDC304E3247FCD9700FA2577 /* SetCardStartFlyingOutBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC304E2247FCD9700FA2577 /* SetCardStartFlyingOutBehavior.swift */; };
+		DDEA38AE248B7B4D00E5EC24 /* Programming Project 4_ Animated Set.pdf in Resources */ = {isa = PBXBuildFile; fileRef = DDEA38AA248B7B4D00E5EC24 /* Programming Project 4_ Animated Set.pdf */; };
+		DDEA38AF248B7B4D00E5EC24 /* Programming Project 2_ Set.pdf in Resources */ = {isa = PBXBuildFile; fileRef = DDEA38AB248B7B4D00E5EC24 /* Programming Project 2_ Set.pdf */; };
+		DDEA38B0248B7B4D00E5EC24 /* Programming Project 3_ Graphical Set.pdf in Resources */ = {isa = PBXBuildFile; fileRef = DDEA38AC248B7B4D00E5EC24 /* Programming Project 3_ Graphical Set.pdf */; };
+		DDEA38B1248B7B4D00E5EC24 /* Programming Project 1_ Concentration.pdf in Resources */ = {isa = PBXBuildFile; fileRef = DDEA38AD248B7B4D00E5EC24 /* Programming Project 1_ Concentration.pdf */; };
 		DDFFF2D9247EB5110072A181 /* SetCardViewCollectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFFF2D8247EB5110072A181 /* SetCardViewCollectionDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -52,7 +58,10 @@
 
 /* Begin PBXFileReference section */
 		DD1527FF2469D2EB0084EA4B /* SetCardGameScoringSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardGameScoringSystem.swift; sourceTree = "<group>"; };
-		DD1EBA0C245625B500E371A3 /* Programming Project 2_ Set.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "Programming Project 2_ Set.pdf"; path = "../../../../Downloads/Programming Project 2_ Set.pdf"; sourceTree = "<group>"; };
+		DD1722F8248567F200BFDE2B /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		DD1722F9248567F200BFDE2B /* Concentration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Concentration.swift; sourceTree = "<group>"; };
+		DD1722FA248567F300BFDE2B /* ConcentrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcentrationViewController.swift; sourceTree = "<group>"; };
+		DD1722FB248567F300BFDE2B /* ConcentrationThemeChooserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcentrationThemeChooserViewController.swift; sourceTree = "<group>"; };
 		DD4CA543246C45F1000E805D /* FigureDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FigureDrawer.swift; sourceTree = "<group>"; };
 		DD4DEE42245049FC009619BA /* Set.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Set.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD4DEE45245049FC009619BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -77,9 +86,12 @@
 		DD585DDA246ED6E900DD789A /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 		DD7282DB24546F6900B37DFE /* SetCardGameCheat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardGameCheat.swift; sourceTree = "<group>"; };
 		DD79D3392455F6B500F5A188 /* SetCardGamePhoneMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardGamePhoneMode.swift; sourceTree = "<group>"; };
-		DDC017DF246590E300FAD5CA /* Programming Project 3_ Graphical Set.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "Programming Project 3_ Graphical Set.pdf"; path = "../../../../Downloads/Programming Project 3_ Graphical Set.pdf"; sourceTree = "<group>"; };
 		DDC017E32465CEA800FAD5CA /* SetCardViewCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardViewCollection.swift; sourceTree = "<group>"; };
 		DDC304E2247FCD9700FA2577 /* SetCardStartFlyingOutBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardStartFlyingOutBehavior.swift; sourceTree = "<group>"; };
+		DDEA38AA248B7B4D00E5EC24 /* Programming Project 4_ Animated Set.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Programming Project 4_ Animated Set.pdf"; sourceTree = "<group>"; };
+		DDEA38AB248B7B4D00E5EC24 /* Programming Project 2_ Set.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Programming Project 2_ Set.pdf"; sourceTree = "<group>"; };
+		DDEA38AC248B7B4D00E5EC24 /* Programming Project 3_ Graphical Set.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Programming Project 3_ Graphical Set.pdf"; sourceTree = "<group>"; };
+		DDEA38AD248B7B4D00E5EC24 /* Programming Project 1_ Concentration.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Programming Project 1_ Concentration.pdf"; sourceTree = "<group>"; };
 		DDFFF2D8247EB5110072A181 /* SetCardViewCollectionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardViewCollectionDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -108,6 +120,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DD1722F7248567D500BFDE2B /* Concentration */ = {
+			isa = PBXGroup;
+			children = (
+				DD1722F8248567F200BFDE2B /* Card.swift */,
+				DD1722F9248567F200BFDE2B /* Concentration.swift */,
+				DD1722FA248567F300BFDE2B /* ConcentrationViewController.swift */,
+				DD1722FB248567F300BFDE2B /* ConcentrationThemeChooserViewController.swift */,
+			);
+			path = Concentration;
+			sourceTree = "<group>";
+		};
 		DD4CA545246C89CE000E805D /* FigureDrawer */ = {
 			isa = PBXGroup;
 			children = (
@@ -142,6 +165,7 @@
 				DD4DEE44245049FC009619BA /* Set */,
 				DD4DEE5B245049FD009619BA /* SetTests */,
 				DD4DEE66245049FD009619BA /* SetUITests */,
+				DDEA38A9248B7B3A00E5EC24 /* TasksPDF */,
 				DD4DEE43245049FC009619BA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -163,6 +187,7 @@
 				DDC017E32465CEA800FAD5CA /* SetCardViewCollection.swift */,
 				DDFFF2D8247EB5110072A181 /* SetCardViewCollectionDelegate.swift */,
 				DD4DEE4B245049FC009619BA /* Main.storyboard */,
+				DD1722F7248567D500BFDE2B /* Concentration */,
 				DDC304E1247FCD6D00FA2577 /* SetCardFlyingOutBehavior */,
 				DD4CA547246C9A7C000E805D /* SetGameCore */,
 				DD4CA546246C9A47000E805D /* SetGameExtensions */,
@@ -194,8 +219,6 @@
 		DD4DEE7524504A12009619BA /* Supporting files */ = {
 			isa = PBXGroup;
 			children = (
-				DDC017DF246590E300FAD5CA /* Programming Project 3_ Graphical Set.pdf */,
-				DD1EBA0C245625B500E371A3 /* Programming Project 2_ Set.pdf */,
 				DD4DEE45245049FC009619BA /* AppDelegate.swift */,
 				DD4DEE47245049FC009619BA /* SceneDelegate.swift */,
 				DD4DEE4E245049FD009619BA /* Assets.xcassets */,
@@ -230,6 +253,17 @@
 				DD5483AB2484F10C006994B9 /* SetCardFlyingOutBehaviorProtocol.swift */,
 			);
 			path = SetCardFlyingOutBehavior;
+			sourceTree = "<group>";
+		};
+		DDEA38A9248B7B3A00E5EC24 /* TasksPDF */ = {
+			isa = PBXGroup;
+			children = (
+				DDEA38AD248B7B4D00E5EC24 /* Programming Project 1_ Concentration.pdf */,
+				DDEA38AB248B7B4D00E5EC24 /* Programming Project 2_ Set.pdf */,
+				DDEA38AC248B7B4D00E5EC24 /* Programming Project 3_ Graphical Set.pdf */,
+				DDEA38AA248B7B4D00E5EC24 /* Programming Project 4_ Animated Set.pdf */,
+			);
+			path = TasksPDF;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -336,9 +370,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDC017E0246590E300FAD5CA /* Programming Project 3_ Graphical Set.pdf in Resources */,
+				DDEA38AF248B7B4D00E5EC24 /* Programming Project 2_ Set.pdf in Resources */,
+				DDEA38AE248B7B4D00E5EC24 /* Programming Project 4_ Animated Set.pdf in Resources */,
+				DDEA38B0248B7B4D00E5EC24 /* Programming Project 3_ Graphical Set.pdf in Resources */,
 				DD4DEE52245049FD009619BA /* LaunchScreen.storyboard in Resources */,
-				DD1EBA0D245625B500E371A3 /* Programming Project 2_ Set.pdf in Resources */,
+				DDEA38B1248B7B4D00E5EC24 /* Programming Project 1_ Concentration.pdf in Resources */,
 				DD4DEE4F245049FD009619BA /* Assets.xcassets in Resources */,
 				DD4DEE4D245049FC009619BA /* Main.storyboard in Resources */,
 			);
@@ -366,6 +402,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DDFFF2D9247EB5110072A181 /* SetCardViewCollectionDelegate.swift in Sources */,
+				DD1722FC248567F300BFDE2B /* Card.swift in Sources */,
+				DD1722FE248567F300BFDE2B /* ConcentrationViewController.swift in Sources */,
 				DD580ECA24693D3F00FD9B36 /* DrawStrategy.swift in Sources */,
 				DD79D33A2455F6B500F5A188 /* SetCardGamePhoneMode.swift in Sources */,
 				DDC304E3247FCD9700FA2577 /* SetCardStartFlyingOutBehavior.swift in Sources */,
@@ -379,6 +417,8 @@
 				DD4DEE7724505AC5009619BA /* SetCard.swift in Sources */,
 				DD4ED75B246831D500617DB5 /* SetCardView.swift in Sources */,
 				DD4DEE48245049FC009619BA /* SceneDelegate.swift in Sources */,
+				DD1722FF248567F300BFDE2B /* ConcentrationThemeChooserViewController.swift in Sources */,
+				DD1722FD248567F300BFDE2B /* Concentration.swift in Sources */,
 				DD5483AA2484F076006994B9 /* SetCardEndFlyingOutBehavior.swift in Sources */,
 				DD5483AC2484F10C006994B9 /* SetCardFlyingOutBehaviorProtocol.swift in Sources */,
 				DD7282DC24546F6900B37DFE /* SetCardGameCheat.swift in Sources */,

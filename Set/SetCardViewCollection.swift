@@ -46,7 +46,7 @@ class SetCardViewCollection: UIView, SetCardGameScoringSystemDelegate {
             self.respondToMatchedSet(self.delegate?.setCardViewCollection(isDeckEmptyFrom: self) ?? true)
             return false
         } else {
-            guard let matches = cheat.detectSet(in: setCardViewsThatNeedToBeRearranged) else { return false }
+            guard let matches = cheat.detectSet(in: setCardViewsThatCanBeRearranged) else { return false }
             deselectSelectedSetCardViews()
             matches[0].forEach
             {
@@ -58,7 +58,7 @@ class SetCardViewCollection: UIView, SetCardGameScoringSystemDelegate {
     
     public func add(set: [SetCard]?) {
         guard let set = set else { return }
-        assert(setCardViews().count < 81, "Number of set cards cannot be larger than 81.")
+        assert(setCardViews.count < 81, "Number of set cards cannot be larger than 81.")
         doPenaltyIfSomeMatchesAvailable()
         delegate?.setCardViewCollection(resetBotModeFrom: self)
         updateSubviews(set)
@@ -69,15 +69,19 @@ class SetCardViewCollection: UIView, SetCardGameScoringSystemDelegate {
     }
     
     public func reset() {
-        setCardViews().forEach { $0.removeFromSuperview() }
+        setCardViews.forEach { $0.removeFromSuperview() }
         selected.removeAll()
         score.reset()
+    }
+    
+    public func setNeedsRearange() {
+        needsRearange = true
     }
     
     fileprivate func doPenaltyIfSomeMatchesAvailable() {
         /// Penalty for not matched matches on screen
         if selected.count != 3 {
-            if let matches = cheat.detectSet(in: setCardViews()) {
+            if let matches = cheat.detectSet(in: setCardViews) {
                 score.update(-matches.count)
             }
         }
@@ -261,9 +265,16 @@ class SetCardViewCollection: UIView, SetCardGameScoringSystemDelegate {
     }
     
     fileprivate func reshuffleSetCardViews() {
-        let shuffled = setCardViews().map { $0.setCard }.shuffled()
-        for shuffledIndex in shuffled.indices {
-            setCardViews()[shuffledIndex].setNewSetCard(setCard: shuffled[shuffledIndex]!)
+        let usable = setCardViewsThatCanBeRearranged
+        var startIndex = usable.startIndex
+        let shuffledFrames = usable.map { $0.frame }.shuffled()
+        for view in usable {
+            UIViewPropertyAnimator.runningPropertyAnimator(
+                withDuration: 0.55,
+                delay: 0,
+                options: [.allowAnimatedContent],
+                animations: {  view.frame = shuffledFrames[startIndex] })
+            startIndex += 1
         }
     }
     
@@ -272,7 +283,7 @@ class SetCardViewCollection: UIView, SetCardGameScoringSystemDelegate {
             selected.forEach { $0.select(with: SetCardViewBorderColors.correct) }
             score.matched(subviews.count)
         } else {
-            score.notMatched(setCardViews().count)
+            score.notMatched(setCardViews.count)
             selected.forEach { $0.select(with: SetCardViewBorderColors.mistake) }
         }
     }
@@ -283,25 +294,25 @@ class SetCardViewCollection: UIView, SetCardGameScoringSystemDelegate {
     override func layoutSubviews() {
         
         if animator.isRunning { return }
-        else if setCardViews().count == 0 { return }
+        else if setCardViews.count == 0 { return }
         else if !needsRearange { return }
         
         grid.frame = bounds
-        grid.cellCount = setCardViews().count
-        let rearrangedCardIndices = 0..<self.setCardViewsThatNeedToBeRearranged.count
+        grid.cellCount = setCardViews.count
+        let rearrangedCardIndices = 0..<self.setCardViewsThatCanBeRearranged.count
         for index in rearrangedCardIndices {
             UIViewPropertyAnimator.runningPropertyAnimator(
                 withDuration: 0.25,
                 delay: 0,
                 options: [.allowAnimatedContent],
                 animations: {
-                    self.setCardViews()[index].frame = self.grid[index]!.inset(by: UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4))
+                    self.setCardViews[index].frame = self.grid[index]!.inset(by: UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4))
                 }
             )
         }
         var delay = 0.25
-        for index in self.setCardViewsThatNeedToBeRearranged.count..<setCardViews().count {
-            let card = setCardViews()[index]
+        for index in self.setCardViewsThatCanBeRearranged.count..<setCardViews.count {
+            let card = setCardViews[index]
             UIViewPropertyAnimator.runningPropertyAnimator(
                 withDuration: 0.5,
                 delay: delay,
@@ -310,7 +321,7 @@ class SetCardViewCollection: UIView, SetCardGameScoringSystemDelegate {
                     card.frame = self.grid[index]!.inset(by: UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4))
                 },
                 completion: { finish in
-                    if !self.setCardViews().indices.contains(index) { return }
+                    if !self.setCardViews.indices.contains(index) { return }
                     if (card.isFaceUp) { return }
                     UIView.transition(
                         with: card,
@@ -327,19 +338,19 @@ class SetCardViewCollection: UIView, SetCardGameScoringSystemDelegate {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        needsRearange = true
+        setNeedsRearange()
     }
     
     fileprivate func fromSetToSetCardView(_ set: [SetCard]) -> [SetCardView] {
         return set.map { SetCardView(frame: frame, setCard: $0) }
     }
     
-    fileprivate func setCardViews() -> [SetCardView] {
+    fileprivate var setCardViews: [SetCardView] {
         return subviews as! [SetCardView]
     }
     
-    fileprivate var setCardViewsThatNeedToBeRearranged: [SetCardView] {
-        return setCardViews().filter {
+    fileprivate var setCardViewsThatCanBeRearranged: [SetCardView] {
+        return setCardViews.filter {
             $0.isFaceUp &&
             !cardStartFlyingOutBehavior.contains($0)  &&
             !cardEndFlyingOutBehavior.contains($0)

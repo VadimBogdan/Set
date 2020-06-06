@@ -68,6 +68,11 @@ class SetCardGameViewController: UIViewController, SetCardViewCollectionDelegate
         scaleFonts()
     }
 
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        scaleFonts()
+        setCardViewCollection.setNeedsRearange()
+    }
+    
     private func scaleFonts() {
         dealButton.titleLabel?.font = scaledFont
         newGameButton.titleLabel?.font = scaledFont

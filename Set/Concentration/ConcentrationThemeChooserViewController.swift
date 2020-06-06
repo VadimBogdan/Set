@@ -42,35 +42,38 @@ class ConcentrationThemeChooserViewController: UIViewController, UISplitViewCont
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-           if let cvc = segue.destination as? ConcentrationViewController {
+        if let cvc = segue.destination.contents as? ConcentrationViewController,
+            let button = sender as? UIButton,
+            let title = button.currentTitle {
             if segue.identifier == "Choose Theme" {
-                let button = sender as! UIButton
-                let title: String
                 switch button {
                 case technology:
-                    title = "technology"
-                    cvc.theme = themes[title]!
+                    cvc.theme = themes["technology"]!
                 case halloween:
-                    title = "halloween"
                     cvc.theme = themes["halloween"]!
                 case sport:
-                    title = "sport"
                     cvc.theme = themes["sport"]!
                 case food:
-                    title = "food"
                     cvc.theme = themes["food"]!
                 case face:
-                    title = "face"
                     cvc.theme = themes["face"]!
                 case animal:
-                    title = "animal"
                     cvc.theme = themes["animal"]!
                 default:
-                    title = "face"
                     cvc.theme = themes["face"]!
                 }
            }
             cvc.title = title
        }
+    }
+}
+
+extension UIViewController {
+    var contents: UIViewController {
+        if let navcon = self as? UINavigationController {
+            return navcon.visibleViewController ?? navcon
+        } else {
+            return self
+        }
     }
 }

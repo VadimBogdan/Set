@@ -219,7 +219,7 @@
                         <outlet property="halloween" destination="uyr-tA-GfH" id="GZW-Uz-U0k"/>
                         <outlet property="sport" destination="irV-0s-R2s" id="ADA-eS-POX"/>
                         <outlet property="technology" destination="WGQ-d5-COs" id="ORL-AX-Jqt"/>
-                        <segue destination="Vdh-66-GhA" kind="showDetail" identifier="Choose Theme" id="gec-9H-08Z"/>
+                        <segue destination="6tt-ll-V3D" kind="showDetail" identifier="Choose Theme" id="gec-9H-08Z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rRy-UU-hqE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -249,14 +249,14 @@
                     <tabBarItem key="tabBarItem" title="Concentration" id="7jX-sW-MnL"/>
                     <connections>
                         <segue destination="0wU-QO-R0v" kind="relationship" relationship="masterViewController" id="SqZ-zY-fgP"/>
-                        <segue destination="Vdh-66-GhA" kind="relationship" relationship="detailViewController" id="zVo-4K-yy4"/>
+                        <segue destination="6tt-ll-V3D" kind="relationship" relationship="detailViewController" id="KTp-Bv-339"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EoG-GG-NeG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1591" y="-285"/>
         </scene>
-        <!--Concentration View Controller-->
+        <!--руд-->
         <scene sceneID="EAZ-tg-DDB">
             <objects>
                 <viewController id="Vdh-66-GhA" customClass="ConcentrationViewController" customModule="Set" customModuleProvider="target" sceneMemberID="viewController">
@@ -457,7 +457,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="E4r-z0-ly9"/>
                     </view>
-                    <navigationItem key="navigationItem" id="XmL-fA-sA6"/>
+                    <navigationItem key="navigationItem" title="руд" id="XmL-fA-sA6"/>
                     <connections>
                         <outlet property="flipCountLabel" destination="xn6-hE-siw" id="6IQ-se-8Zt"/>
                         <outlet property="scoreLabel" destination="suS-dG-HvP" id="CqO-kL-U61"/>
@@ -479,7 +479,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fuQ-K5-Tzo" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="212" y="147"/>
+            <point key="canvasLocation" x="212" y="146"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="hos-uA-USQ">
@@ -517,6 +517,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Bs-pz-q30" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2359" y="490"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="z2z-w8-j5J">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6tt-ll-V3D" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bf5-R6-lnS">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Vdh-66-GhA" kind="relationship" relationship="rootViewController" id="pCf-zu-dNf"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jRd-N7-YzC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-671" y="146"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

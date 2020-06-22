@@ -16,7 +16,7 @@ class SetCardGameViewController: UIViewController, SetCardViewCollectionDelegate
     private var gameAgainstPhoneMode: SetCardGamePhoneMode?
     
     @IBOutlet weak var dealButton: UIButton!
-    @IBOutlet weak var botModeButton: UIButton!
+    @IBOutlet weak var gameAgainstPhoneModeButton: UIButton!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var newGameButton: UIButton!
     @IBOutlet weak var cheatButton: UIButton!
@@ -25,16 +25,17 @@ class SetCardGameViewController: UIViewController, SetCardViewCollectionDelegate
     
     @IBAction func activateBotMode(_ sender: UIButton) {
         gameAgainstPhoneMode = SetCardGamePhoneMode { _ in
+            guard self.gameAgainstPhoneMode!.isValid() else { return }
             if self.setCardViewCollection.cheatSet() {
-                self.botModeButton.setTitle("😂", for: .disabled)
+                self.gameAgainstPhoneModeButton.setTitle("😂", for: .disabled)
             } else {
-                self.botModeButton.setTitle("😢", for: .disabled)
+                self.gameAgainstPhoneModeButton.setTitle("😢", for: .disabled)
             }
         }
-        gameAgainstPhoneMode?.setAnticipation { _ in self.botModeButton.setTitle("😁", for: .disabled) }
-        gameAgainstPhoneMode?.setThink { self.botModeButton.setTitle("🤔", for: .disabled) }
+        gameAgainstPhoneMode?.setAnticipation { _ in self.gameAgainstPhoneModeButton.setTitle("😁", for: .disabled) }
+        gameAgainstPhoneMode?.setThink { self.gameAgainstPhoneModeButton.setTitle("🤔", for: .disabled) }
         setCardViewCollection(resetBotModeFrom: setCardViewCollection)
-        botModeButton.isEnabled = false
+        gameAgainstPhoneModeButton.isEnabled = false
     }
     
     @IBAction func dealSet(_ sender: UIButton) {
@@ -47,11 +48,11 @@ class SetCardGameViewController: UIViewController, SetCardViewCollectionDelegate
     
     @IBAction func restartGame(_ sender: UIButton) {
         game = SetGame()
-        botModeButton.setTitle("Bot", for: .normal)
+        gameAgainstPhoneModeButton.setTitle("Bot", for: .normal)
         dealButton.isEnabled = true
         dealButton.titleLabel?.alpha = 1.0
         dealButton.alpha = 1.0
-        botModeButton.isEnabled = true
+        gameAgainstPhoneModeButton.isEnabled = true
         gameAgainstPhoneMode?.stop()
         setCardViewCollection.reset()
         start()
@@ -76,7 +77,7 @@ class SetCardGameViewController: UIViewController, SetCardViewCollectionDelegate
     private func scaleFonts() {
         dealButton.titleLabel?.font = scaledFont
         newGameButton.titleLabel?.font = scaledFont
-        botModeButton.titleLabel?.font = scaledFont
+        gameAgainstPhoneModeButton.titleLabel?.font = scaledFont
         cheatButton.titleLabel?.font = scaledFont
         scoreLabel.font = scaledFont
     }

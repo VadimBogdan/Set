@@ -37,12 +37,23 @@ struct SetCardGamePhoneMode
         }
     }
     
+    public func isValid() -> Bool {
+        guard
+            let anticipationTimer = anticipationTimer,
+            let actionTimer = actionTimer
+        else {
+            return false
+        }
+        return anticipationTimer.isValid && actionTimer.isValid
+    }
+    
     public mutating func thinking() {
         assert(anticipation != nil, "ComputerMode.think() -> 'Anticipation part does not set.'")
+        guard let anticipation = anticipation else { return }
         think?()
         
         actionTimer = Timer.scheduledTimer(withTimeInterval: cooldown, repeats: false, block: action)
-        anticipationTimer = Timer.scheduledTimer(withTimeInterval: cooldown - 4, repeats: false, block: anticipation!)
+        anticipationTimer = Timer.scheduledTimer(withTimeInterval: cooldown - 4, repeats: false, block: anticipation)
     }
     
     public init(_ action: @escaping (Timer) -> Void) {

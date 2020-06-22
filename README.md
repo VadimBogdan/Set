@@ -19,13 +19,13 @@ Technologies applied:
 
 ![](https://media.giphy.com/media/mCtQsQlWUeaeuZjHVx/giphy.gif)
 
-Rotation example:
+Rotation is supported:
 
-![](https://media.giphy.com/media/hVJFzHxHGB4ICapiTw/giphy.gif)
+![](https://media.giphy.com/media/fXbeiZxarImpOrQdKm/giphy.gif)
 
-Found match animation
+Fun animations:
 
-![](https://media.giphy.com/media/ge7jXkP6Dpafk6AS1a/giphy.gif)
+![](https://media.giphy.com/media/UUzbn1oHOrem38WH5U/giphy.gif)
 
 Bonus game: Concentration. It's main purpose is to make match between two similar cards. Whenever two cards are selected,
 the next user's tap on a hidden card automatically flips them over. If there is a match, two cards leave the table.

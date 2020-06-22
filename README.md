@@ -19,7 +19,7 @@ Technologies applied:
 
 ![](https://media.giphy.com/media/mCtQsQlWUeaeuZjHVx/giphy.gif)
 
-![](https://media.giphy.com/media/TJrQWCj3oUBpK8F4d8/giphy.gif)
+![](https://media.giphy.com/media/hVJFzHxHGB4ICapiTw/giphy.gif)
 
 ![](https://media.giphy.com/media/L05cz8r7b17o2WIWbE/giphy.gif)
 

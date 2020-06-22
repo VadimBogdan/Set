@@ -19,7 +19,11 @@ Technologies applied:
 
 ![](https://media.giphy.com/media/mCtQsQlWUeaeuZjHVx/giphy.gif)
 
+Rotation example:
+
 ![](https://media.giphy.com/media/hVJFzHxHGB4ICapiTw/giphy.gif)
+
+Found match animation
 
 ![](https://media.giphy.com/media/L05cz8r7b17o2WIWbE/giphy.gif)
 

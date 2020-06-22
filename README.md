@@ -25,7 +25,7 @@ Rotation example:
 
 Found match animation
 
-![](https://media.giphy.com/media/L05cz8r7b17o2WIWbE/giphy.gif)
+![](http://www.giphy.com/gifs/StpSTtVPDfVn52uod2)
 
 Bonus game: Concentration. It's main purpose is to make match between two similar cards. Whenever two cards are selected,
 the next user's tap on a hidden card automatically flips them over. If there is a match, two cards leave the table.
